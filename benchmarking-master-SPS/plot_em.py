@@ -14,13 +14,14 @@ def monoExp(x, t):
 
 
 
+
 R0 = []
 R1 = []
 
 delimiter=" "
 #with open('/home/agson/cernbox2/Agnieszka/new_rf_track/inter_tracking/results/Scharge/shift3YD0/LEIR_emitt.dat') as f:
-#with open('/home/pkruyt/cernbox/RF_Code/benchmarking-master/tracking/results/LEIR_emitt.dat') as f:
-with open('/home/pkruyt/cernbox/electron_cooling/benchmarking-master/results/LEIR_emitt.dat') as f:
+#with open('/home/pkruyt/cernbox/RF_Code/benchmarking-master-SPS/tracking/results/LEIR_emitt.dat') as f:
+with open('/home/pkruyt/cernbox/electron_cooling/benchmarking-master-SPS/results/LEIR_emitt.dat') as f:
     data = f.readlines()
     for line in data:
        # print(line)
@@ -36,7 +37,7 @@ R0_old = []
 R1_old = []
 delimiter=" "
 #with open('/home/agson/cernbox2/Agnieszka/new_rf_track/inter_tracking/results/Scharge/shift3YD2/LEIR_emitt.dat') as f:
-with open('/home/pkruyt/cernbox/RF_Code/benchmarking-master/tracking/results/LEIR_emitt.dat') as f:
+with open('/home/pkruyt/cernbox/electron_cooling/benchmarking-master-SPS/results/LEIR_emitt.dat') as f:
     data = f.readlines()
     for line in data:
        # print(line)
@@ -48,7 +49,7 @@ R0_int = []
 R1_int = []
 delimiter=" "
 #with open('/home/agson/cernbox2/Agnieszka/new_rf_track/inter_tracking/results/Scharge/shift3YD5/LEIR_emitt.dat') as f:
-with open('/home/pkruyt/cernbox/RF_Code/benchmarking-master/tracking/results/LEIR_emitt.dat') as f:
+with open('/home/pkruyt/cernbox/electron_cooling/benchmarking-master-SPS/results/LEIR_emitt.dat') as f:
     data = f.readlines()
     for line in data:
        # print(line)

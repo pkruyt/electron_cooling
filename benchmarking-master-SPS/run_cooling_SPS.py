@@ -2,14 +2,15 @@
 #RFTrackPath = '/Users/dgamba/CERN/COOLING/Software/RF-Track2.0'
 #RFTrackPath = '/home/agson/cernbox2/Agnieszka/inter-rf-track'
 RFTrackPath = '/home/pkruyt/cernbox/rf-track-2.0'
-from LEIR_Pb_beam import LEIR_Pb_beam
-from LEIR_Cooler_uniform import LEIR_Cooler_uniform
-from LEIR_Lattice import LEIR_Lattice
+from SPS_Pb_beam import SPS_Pb_beam
+from SPS_Cooler_uniform import SPS_Cooler_uniform
+from SPS_Lattice import SPS_Lattice
 import sys
 import os
 import math
 import numpy as np
 import datetime
+import pickle
 sys.path.append(RFTrackPath)
 import RF_Track as RFT
 
@@ -26,9 +27,10 @@ Ions_A = 207.2; #% atomic number
 Ions_Q = 54;# % ion charge
 Ions_mass = Ions_A * RFT.protonmass; #% MeV/c^2
 #print('Ion mass:',Ions_mass)
-Ions_K = 4.2 * Ions_A; #% MeV, initial kinetic energy
-Ions_E = Ions_mass + Ions_K;# % MeV
-Ions_P = np.sqrt(Ions_E**2 - Ions_mass**2); #% MeV/c
+#Ions_K = 4.2 * Ions_A; #% MeV, initial kinetic energy
+#Ions_E = Ions_mass + Ions_K;# % MeV
+#Ions_P = np.sqrt(Ions_E**2 - Ions_mass**2); #% MeV/c
+Ions_P = 18644000000000.0*1e-6 #MeV/c
 Ions_Pspread =0.025 #% percent
 Ions_beta_gamma = Ions_P / Ions_mass;
 print(Ions_beta_gamma,"Ions_beta_gamma")
@@ -102,8 +104,8 @@ def get_table_row(B, Setup):
 
 
 #%%%%%%%%%%%%%% Main part
-B0   = LEIR_Pb_beam(Setup);
-LEIR = LEIR_Lattice(Setup);
+B0   = SPS_Pb_beam(Setup);
+LEIR = SPS_Lattice(Setup);
 
 TMP = B0.get_phase_space("%x %Px %y %Py %t %Pz %d")
 M = B0.get_phase_space("%x %xp %y %yp %t %Vz %Vx %Vy %E %P")
@@ -170,7 +172,6 @@ for i in tqdm(range(1,10000)):
 
     #%% Save the table every 500 turns
     if i%500 == 0:
-        #np.savetxt(outdir+'LEIR_emitt.dat.gz', np.c_[(E)])
         np.savetxt(outdir+'LEIR_emitt.dat', np.c_[(E)])
         TMP = B0.get_phase_space("%x %Px %y %Py %t %Pz %d")
         M = B0.get_phase_space("%x %xp %y %yp %t %Vz %Vx %Vy %E %P")
@@ -189,8 +190,8 @@ for i in tqdm(range(1,10000)):
         print('t = %g msec %g    \n'% (t_ms,i))
 
     #%% Stop when emmitance drop by 10.5 times or after 200 ms
-    if  E[i,1]<float(E[0,1])/10.5 or t_ms>=200:
-        break;
+    #if  E[i,1]<float(E[0,1])/10.5 or t_ms>=200:
+    #    break;
 
 np.savetxt(outdir+'LEIR_emitt.dat', np.c_[(E)])
 
@@ -201,7 +202,6 @@ np.savetxt(outdir+'LEIR_emitt.dat', np.c_[(E)])
 #np.savetxt(outdir+'LEIR_F_Scharge_M0.dat', np.c_[(TT0[:10000],M[:,5])])
 
 M=B0.get_phase_space("%x %xp %y %yp %t %Vz %Vx %Vy %E %P")
-#np.savetxt(outdir+'LEIR_beam_out.dat.gz', np.c_[(M)])
 np.savetxt(outdir+'LEIR_beam_out.dat', np.c_[(M)])
 #Save histograms:
 # np.savetxt(outdir+'LEIR_Xhist.dat.gz', np.c_[(histX)])
