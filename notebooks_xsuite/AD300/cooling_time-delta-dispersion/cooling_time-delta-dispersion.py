@@ -85,27 +85,30 @@ dp_p=(p2-p0)/p0
 cooling_time = []
 num_particles = 1
 
-disp_values = np.linspace(-20, 20, num=40)
-delta_values = np.linspace(1e-5, 5e-3, num=50)  # example delta values, adjust as needed
+disp_values = np.linspace(1, 20, num=20)
+delta_values = np.linspace(-5e-3, 5e-3, num=20)  # example delta values, adjust as needed
 
-for disp in tqdm(disp_values):
-    for delta in delta_values:
+cooling_time = np.zeros((len(disp_values), len(delta_values)))  # initialize empty array to store cooling_time values
+
+for i, disp in enumerate(tqdm(disp_values)):
+    for j, delta in enumerate(delta_values):
         disp_x = disp
+        cooling_time_found = False
+
+        arc=xt.LinearTransferMatrix(Q_x=5.44, Q_y=5.42,
+                            beta_x_0=beta_x, beta_x_1=beta_x,
+                            beta_y_0=beta_y,  beta_y_1=beta_y,
+                            alpha_x_0=0,   alpha_x_1=0,
+                            alpha_y_0=0,   alpha_y_1=0,
+                            disp_x_0=disp_x,disp_x_1=disp_x,
+                            disp_y_0=0,    disp_y_1=0,
+                            beta_s=1*1e40,
+                            Q_s=0,
+                            chroma_x=0.0, chroma_y=0)
+
         delta_single = delta
 
-        arc = xt.LinearTransferMatrix(Q_x=5.44, Q_y=5.42,
-                                      beta_x_0=beta_x, beta_x_1=beta_x,
-                                      beta_y_0=beta_y,  beta_y_1=beta_y,
-                                      alpha_x_0=0,   alpha_x_1=0,
-                                      alpha_y_0=0,   alpha_y_1=0,
-                                      disp_x_0=disp_x,disp_x_1=disp_x,
-                                      disp_y_0=0,    disp_y_1=0,
-                                      beta_s=1*1e40,
-                                      Q_s=0,
-                                      chroma_x=0.0, chroma_y=0)
-
-        
-        particles = xp.Particles(
+        dtk_particle = xp.Particles(
                 mass0=mass0,
                 p0c=p0c,
                 x=disp_x*delta_single,
@@ -115,9 +118,9 @@ for disp in tqdm(disp_values):
                 delta=delta_single,
                 zeta=0)
 
-        cooler = xt.ElectronCooler(current=current,length=length,r_beam=r_beam,
+        dtk_cooler = xt.ElectronCooler(current=current,length=length,r_beam=r_beam,
                                                 T_perp=T_perp,T_l=T_l,
-                                                B=B,B_ratio=B_ratio,
+                                                B=B,B_ratio=1e-4,
                                                 Neutralisation_space_charge=1)
 
         num_turns = int(1*1e7)
@@ -125,20 +128,21 @@ for disp in tqdm(disp_values):
 
         
         # loop over turns
-        for i in tqdm(range(num_turns)):
-            if abs(particles.delta) < abs(0.1 * delta_single):
-                cooling_time.append(i * s_per_turn)
+        for turn in tqdm(range(num_turns)):
+            if dtk_particle.delta < 0.1 * delta_single:
+                cooling_time[i, j] = turn * s_per_turn  # store cooling_time value in the corresponding array position
                 cooling_time_found = True
                 break
 
             # track particle
-            arc.track(particles)
-            cooler.track(particles)
+            arc.track(dtk_particle)
+            dtk_cooler.track(dtk_particle)
 
-        if abs(particles.delta) > abs(0.1 * delta_single):
-            cooling_time.append(num_turns * s_per_turn)  # Append default value if cooling condition is not met
+        if not cooling_time_found:
+            cooling_time[i, j] = turn * s_per_turn  # store cooling_time value in the corresponding array position
 
 # Save arrays to .npz file
 np.savez('cooling_time_data.npz', cooling_time=cooling_time, delta_values=delta_values, disp_values=disp_values)
+
 
 
