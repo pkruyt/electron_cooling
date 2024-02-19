@@ -251,6 +251,7 @@ Temporary Items
 
 # Ignore .npz files, because those are the data files
 *.npz
+*.parquet
 *.o
 
 
