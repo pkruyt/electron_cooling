@@ -9,7 +9,7 @@
 1= Longitudinal form factor
 1982.606795= Longitudinal space charge impendances, Ohm
 1= Transverse space charge impendances, Ohm/m
-2.305070704e-08= Peak current, A
+3.11184545e-08= Peak current, A
 0= Emittance definition: RMS(0),CS(1),FWHM(2),%(3)
 0= Use for IBS kick
 38= Percents for transverse degrees of freedom
@@ -27,23 +27,23 @@
 40000= Maximum number of model particles
 1e-06= Impact parametr, m
 78.54370266= Cell size, m
-1.065293664= Linear density
+1.301243349= Linear density
 497210203.9= Initial longitudinal temperature, K
 61127850.59= Initial transverse temperature, K
-1.946538529e-08= Gamma1
-6.712981281e-09; Gamma2
+3.54756647e-08= Gamma1
+1.223440838e-08; Gamma2
 
 [row=3] Beam | Parameters | Stability
 1= Image force correction factor
-7.495553319e-08= Horizontal tune shift
-7.495553319e-08= Vertical tune shift
+1.366064592e-07= Horizontal tune shift
+1.366064592e-07= Vertical tune shift
 1= Factor of distribution function FI
 1= Longitudinal coupling impendance, Ohm
-8.157082045e-09= Microwavw instaility
+1.486628203e-08= Microwavw instaility
 0.0111191061= Tune spread for first mode
 1= Factor of distribution function Ft
 1= Transverse coupling impendance, Ohm/m
-5.177463164e-15; Dipole instability
+9.435926616e-15; Dipole instability
 
 [row=4] Beam | Parameters | Bunch
 1= Number of bunches
@@ -186,7 +186,7 @@
 2= Reference Energy: Gamma(0), Beta(1), Kinetic(2), Momentum(3)
 1.004469679,0.09423258405,862.68,18.26885331= Reference Energy
 207.2= Atomic number
-40= Charge number
+54= Charge number
 1= Life time, sec
 6; eV/u(0), keV/u(1), Mev/u(2), GeV/u(3), eV(4), keV(5), MeV(6), GeV(7)
 
@@ -258,7 +258,7 @@ nica_5e-4.inj= File with initial distribution
 24= Harmonic number
 0.65= RF voltage, kV
 3.272654277= Separatrix length, m
-0.008605454296= Synchrotron tune
+0.009998634352= Synchrotron tune
 100= Separatrix size, %
 0= Initial momentum deviation, dP/p
 -0.006= Final momentum deviation, dP/P
@@ -335,7 +335,7 @@ nica_5e-4.inj= File with initial distribution
 50= Voltage amplitude, kV
 0.2= RF duration in T0
 0.1= Gap duration in T0
-0.01895775159= Barrier height
+0.02202691686= Barrier height
 1= RMS amplitude
 1= Bucket length, m
 1= Synchrotron period in sec
@@ -482,9 +482,9 @@ TEK00005.DAT= oscilograph
 2.828075263e+20= Density, atom/cm^3
 1= Calculate from material (0/1)
 2.828075263e+20= Density, atom/cm^2
-0.02541885693= Stripping angle
-4701691280= Energy loss, eV
-2939964.591= Stripping energy, eV
+0.03285113895= Stripping angle
+8568832357= Energy loss, eV
+3968952.198= Stripping energy, eV
 1= Energy loss (0/1)
 2.828075263e+20; Effective density [cm^-2]
 
